@@ -1,8 +1,25 @@
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import user
 from app.database import init_db
 
 app = FastAPI()
+
+load_dotenv()
+
+# CORS origins
+origins = [os.getenv("FRONTEND_URL")]
+
+# CORS middleware setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins, 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Include routers
 app.include_router(user.router)

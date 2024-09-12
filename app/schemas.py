@@ -1,3 +1,4 @@
+from typing import Any, Dict, List
 from pydantic import BaseModel
 
 
@@ -15,3 +16,22 @@ class UserResponseSchema(BaseModel):
     name: str
     email: str
     token: str = None
+
+class TripRequestSchema(BaseModel):
+    user_id: str
+    destination: list[str]
+    budget: float
+    start_date: str
+    duration: int
+    preferences: list[str]
+
+class TripResponseSchema(BaseModel):
+    id: str
+    user_id: str
+    destination: list[str]
+    budget: float
+    duration: int
+    start_date: str
+    preferences: list[str]
+    itineraries: List[Dict[str, Any]]
+    favorite: bool = False

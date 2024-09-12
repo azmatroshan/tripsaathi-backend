@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.endpoints import user
+from app.api.endpoints import trips, user
 from app.database import init_db
 
 app = FastAPI()
@@ -23,6 +23,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(user.router)
+app.include_router(trips.router)
 
 @app.on_event("startup")
 async def startup_event():

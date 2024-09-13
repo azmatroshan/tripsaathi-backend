@@ -12,7 +12,7 @@ class Trip(Model):
     destination: list[str]
     budget: float
     duration: int
-    preferences: list[str]
+    interests: list[str]
     itineraries: List[Dict[str, Any]]
     start_date: str
     favorite: bool = False

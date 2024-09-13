@@ -6,16 +6,16 @@ import json
 # Configure the Gemini API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-async def generate_trip_plan(destinations: List[str], total_budget: float, total_duration: int, preferences: List[str]) -> Dict:
+async def generate_trip_plan(destinations: List[str], total_budget: float, total_duration: int, interests: List[str]) -> Dict:
     model = genai.GenerativeModel('gemini-pro')
     
     prompt = f"""
     Generate a detailed trip plan for the following destinations: {', '.join(destinations)}.
     Total budget: ${total_budget} INR
     Total duration: {total_duration} days
-    User preferences: {', '.join(preferences)}
+    User interests: {', '.join(interests)}
 
-    Tailor the trip to the user's preferences, ensuring activities and attractions align with their interests.
+    Tailor the trip to the user's interests, ensuring activities and attractions align with their interests.
 
     For each destination, provide:
     1. A suggested budget (ensure the sum doesn't exceed the total budget)
@@ -52,7 +52,12 @@ async def generate_trip_plan(destinations: List[str], total_budget: float, total
     
     response = model.generate_content(prompt)
 
-    modified_text = (response.text[7:].rstrip()[:-4]).lstrip('\n')
+    startIndex=0
+    while response.text[startIndex] != '{':
+        startIndex+=1
+
+
+    modified_text = (response.text[startIndex:].rstrip()[:-4])
     print(modified_text)
     
     # Parse the response and extract the JSON

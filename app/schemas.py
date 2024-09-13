@@ -23,7 +23,7 @@ class TripRequestSchema(BaseModel):
     budget: float
     start_date: str
     duration: int
-    preferences: list[str]
+    interests: list[str]
 
 class TripResponseSchema(BaseModel):
     id: str
@@ -32,6 +32,6 @@ class TripResponseSchema(BaseModel):
     budget: float
     duration: int
     start_date: str
-    preferences: list[str]
+    interests: list[str]
     itineraries: List[Dict[str, Any]]
     favorite: bool = False

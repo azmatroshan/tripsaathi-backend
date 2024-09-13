@@ -29,7 +29,7 @@ async def create_trip(trip: TripRequestSchema):
             trip.destination,
             trip.budget,
             trip.duration,
-            trip.preferences
+            trip.interests
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -40,7 +40,7 @@ async def create_trip(trip: TripRequestSchema):
         destination=trip.destination,
         budget=trip.budget,
         duration=trip.duration,
-        preferences=trip.preferences,
+        interests=trip.interests,
         itineraries=generated_plan.get("trip"),
         start_date=trip.start_date,
         favorite=False
@@ -52,7 +52,7 @@ async def create_trip(trip: TripRequestSchema):
     # Return the created trip response
     return TripResponseSchema(id=str(new_trip.id), user_id=new_trip.user_id, destination=new_trip.destination, 
                               budget=new_trip.budget, duration=new_trip.duration, start_date=new_trip.start_date,
-                              preferences=new_trip.preferences, itineraries=new_trip.itineraries)
+                              interests=new_trip.interests, itineraries=new_trip.itineraries)
 
 
 # View all trips for a user
@@ -68,7 +68,7 @@ async def view_all_trips(user_id: str):
     # Return the list of trips
     return [TripResponseSchema(id=str(trip.id), user_id=trip.user_id, destination=trip.destination, 
                                budget=trip.budget, duration=trip.duration, start_date=trip.start_date,
-                               preferences=trip.preferences, itineraries=trip.itineraries, favorite=trip.favorite) 
+                               interests=trip.interests, itineraries=trip.itineraries, favorite=trip.favorite) 
             for trip in trips]
 
 
@@ -84,7 +84,7 @@ async def favorite_trips(user_id: str):
     # Return the list of favorite trips
     return [TripResponseSchema(id=str(trip.id), user_id=trip.user_id, destination=trip.destination, 
                                budget=trip.budget, duration=trip.duration, start_date=trip.start_date, 
-                               preferences=trip.preferences, itineraries=trip.itineraries, favorite=trip.favorite) 
+                               interests=trip.interests, itineraries=trip.itineraries, favorite=trip.favorite) 
             for trip in trips]
 
 
@@ -113,4 +113,4 @@ async def update_favorite_trip(trip_id: str, favorite_value: str):
     return TripResponseSchema(id=str(trip.id), user_id=trip.user_id, destination=trip.destination, 
                               budget=trip.budget, duration=trip.duration, 
                               start_date=trip.start_date,
-                              preferences=trip.preferences, itineraries=trip.itineraries, favorite=trip.favorite)
+                              interests=trip.interests, itineraries=trip.itineraries, favorite=trip.favorite)

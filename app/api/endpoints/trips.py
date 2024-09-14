@@ -33,6 +33,9 @@ async def create_trip(trip: TripRequestSchema):
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+    if not '{' in str(generated_plan):
+        raise HTTPException(status_code=400, detail=generated_plan) 
 
     # Create new trip object
     new_trip = Trip(

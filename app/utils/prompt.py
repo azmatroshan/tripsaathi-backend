@@ -52,12 +52,21 @@ async def generate_trip_plan(destinations: List[str], total_budget: float, total
     
     response = model.generate_content(prompt)
 
+    print(response.text)
+
+    if not '{' in response.text:
+        return response.text
+
     startIndex=0
     while response.text[startIndex] != '{':
         startIndex+=1
 
+    endIndex = len(response.text) - 1
+    while response.text[endIndex] != '}':
+        endIndex-=1
 
-    modified_text = (response.text[startIndex:].rstrip()[:-4])
+
+    modified_text = response.text[startIndex:endIndex + 1]
     print(modified_text)
     
     # Parse the response and extract the JSON

@@ -24,6 +24,10 @@ async def generate_trip_plan(destinations: List[str], total_budget: float, total
     4. Ensure activities reflect the user's preferences where possible
     5. Ensure that day starts from 1 and goes up to the total duration
 
+    Note: if you are not clear with the destination or you found any data provided by user invalid just give the notes of maximum 20 words for user and in that case please don't include any JSON content in response.
+
+    Strictly follow the note.
+
     Respond with a JSON object in the following format:
     {{
         "trip": [

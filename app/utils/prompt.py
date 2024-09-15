@@ -7,7 +7,7 @@ import json
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 async def generate_trip_plan(destinations: List[str], total_budget: float, total_duration: int, interests: List[str]) -> Dict:
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     
     prompt = f"""
     Generate a detailed trip plan for the following destinations: {', '.join(destinations)}.

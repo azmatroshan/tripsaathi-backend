@@ -117,3 +117,20 @@ async def update_favorite_trip(trip_id: str, favorite_value: str):
                               budget=trip.budget, duration=trip.duration, 
                               start_date=trip.start_date,
                               interests=trip.interests, itineraries=trip.itineraries, favorite=trip.favorite)
+
+# Get a trip by ID
+@router.get("/{trip_id}", response_model=TripResponseSchema, status_code=200)
+async def get_trip(trip_id: str) :
+
+    print(trip_id)
+    # Find the trip by ID
+    trip = await engine.find_one(Trip, Trip.id == ObjectId(trip_id))
+
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+    
+    # Return the updated trip
+    return TripResponseSchema(id=str(trip.id), user_id=trip.user_id, destination=trip.destination, 
+                              budget=trip.budget, duration=trip.duration, 
+                              start_date=trip.start_date,
+                              interests=trip.interests, itineraries=trip.itineraries, favorite=trip.favorite)

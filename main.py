@@ -10,7 +10,7 @@ app = FastAPI()
 load_dotenv()
 
 # CORS origins
-origins = [os.getenv("FRONTEND_URL")]
+origins = [os.getenv("FRONTEND_URL"), os.getenv("FRONTEND_URL1"), os.getenv("FRONTEND_URL2")]
 
 # CORS middleware setup
 app.add_middleware(

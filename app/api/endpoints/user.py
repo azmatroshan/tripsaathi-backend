@@ -24,8 +24,10 @@ async def create_user(user: UserSignupSchema):
     hashed_password = pwd_context.hash(user.password)
     new_user = User(name=user.name, email=user.email, password_hash=hashed_password)
     await engine.save(new_user)
+
+    token = jwt.encode({"id": str(new_user.id), "name": new_user.name, "email": new_user.email}, SECRET_KEY, algorithm="HS256")
     
-    return UserResponseSchema(id=str(new_user.id), name=new_user.name, email=new_user.email)
+    return UserResponseSchema(id=str(new_user.id), name=new_user.name, email=new_user.email, token=token)
 
 # Login route
 @router.post("/login", response_model=UserResponseSchema)
